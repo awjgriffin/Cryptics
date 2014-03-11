@@ -1,0 +1,6 @@
+{"puzzles":[
+	{"number":"1", "name":"First", "createDate":"20140305", "clues":[{"answer":"", "location":"1A", "clue":""},{},{},{},{},{},{}]},
+	{"number":"2", "name":"Second", "createDate":"20140305", "clues":[{"answer":"", "location":"1A", "clue":""},{},{},{},{},{},{}]},
+	{"number":"3", "name":"Third", "createDate":"20140305", "clues":[{"answer":"", "location":"1A", "clue":""},{},{},{},{},{},{}]}
+]},
+{"clues":[{"answer":"", "location":"1A", "clue":""},{},{},{},{},{},{}]}
