@@ -1,18 +1,8 @@
 
-//functionalTools.init(); functionalTools = {init:function()}
-
-// "pre-load" the data - this is an async call
-//var jsonData = $.getJSON('/WebTest/rest/json', function(data) { jsonData=data; } );
-
-function listJSON() {
-
-	var jsonData = getData();
-	
-	alert( jsonData["puzzles"][1].name );
-}
 
 
-function getData() {
+// retrieves JSON data from the server, SYNCHRONOUSLY 
+function getJSONData() {
 
 	var jsonData = {};
 	
@@ -27,6 +17,44 @@ function getData() {
 	
 	return jsonData;
 }
+
+//retrieves JSON data from the server, SYNCHRONOUSLY 
+function getJSONDataAsText() {
+
+	var jsonData = {};
+	
+	jQuery.ajax({
+	    type: "GET",
+	    url: '/WebTest/rest/json/asText',
+	    success: function(result) {
+	    	jsonData = result;
+	    },
+	    async: false
+	});	
+	
+	return jsonData;
+}
+
+function postJSONData() {
+
+	var jsonData = getJSONDataAsText();
+	
+	jQuery.ajax({
+	    type: "POST",
+	    url: '/WebTest/rest/json/save?json=' + jsonData,
+	    success: function(result) {
+	    	alert('JSON data successfully posted.');
+	    	//jsonData = result;
+	    },
+	    async: false
+	});	
+	
+	return true;
+}
+
+
+
+
 
 // modify the Function prototype to allow for quick method decoration later
 Function.prototype.method = function (name, fn) {
@@ -87,3 +115,21 @@ Array.method('map', function (fn) {
 });
 
 
+
+// ---- HEAP ------------------------------------------
+
+
+//functionalTools.init(); functionalTools = {init:function()}
+
+//"pre-load" the data - this is an async call
+//var jsonData = $.getJSON('/WebTest/rest/json', function(data) { jsonData=data; } );
+
+
+
+
+function testDataRetrieval() {
+
+	var jsonData = getJSONData();
+	
+	alert( jsonData["puzzles"][1].name );
+}

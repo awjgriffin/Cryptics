@@ -1,12 +1,13 @@
 package com.db.agriffin;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
+import java.io.*;
+import java.net.URISyntaxException;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -17,17 +18,31 @@ import org.codehaus.jettison.json.JSONObject;
 @Produces(MediaType.APPLICATION_JSON)
 public class JSONService {
 
-	
 	@GET
 	public Response readJSONFromFile() {
-
+		
 		try {
+			
 			return okResponse( loadFile().toString() );
+			
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).header("error", e).build();
 		}
 	}
 
+	@GET
+	@Path("asText")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response readJSONFromFileAsText() {
+		
+		try {
+			
+			return okResponse( loadFile().toString() );
+			
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).header("error", e).build();
+		}
+	}	
 
 	private JSONObject loadFile() throws Exception {
 		
@@ -35,7 +50,7 @@ public class JSONService {
 		BufferedReader buffReader;
 		StringWriter sw = new StringWriter();
 		
-		buffReader = new BufferedReader( new InputStreamReader( JSONService.class.getResourceAsStream("/puzzles.json") ) );
+		buffReader = new BufferedReader( new FileReader( getFile("/puzzles.json") ) );
 		
 		String line = "";
 		while( (line = buffReader.readLine()) != null ) {
@@ -52,13 +67,41 @@ public class JSONService {
 	}
 	
 	
-/*	private JSONObject error(String msg) {
+	@Path("save")
+	@POST
+	public Response saveFile(final @QueryParam("json") String json) {
+	
+		BufferedReader buffReader = new BufferedReader( new StringReader( json ) );
 		
-		JSONObject errObject= new JSONObject();
-		errObject.put("error", msg);
-		return errObject;
+		BufferedWriter buffWriter;
+		try {
+			
+			buffWriter = new BufferedWriter( new FileWriter( getFile("/test.json") ) );
+			
+			String line = "";
+			while( (line = buffReader.readLine()) != null ) {
+				buffWriter.write( line );
+			}
+			
+			buffWriter.flush();
+			buffWriter.close();
+			buffReader.close();
+			
+		} catch (IOException e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).header("error", e).build();
+		} catch (URISyntaxException e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).header("error", e).build();
+		}
+		
+		return Response.ok().build();   // TODO: return json as msg?
 	}
-*/	
+	
+	
+	private File getFile( final String filename ) throws URISyntaxException {
+		return new File( this.getClass().getResource( filename ).toURI() ); 
+	}
+	
+	
     public static Response okResponse(final String msg) {
 
     	return Response.ok(msg).
