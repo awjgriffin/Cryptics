@@ -35,6 +35,7 @@ function getJSONDataAsText() {
 	return jsonData;
 }
 
+
 function postJSONData() {
 
 	var jsonData = getJSONDataAsText();
@@ -53,7 +54,25 @@ function postJSONData() {
 }
 
 
+var theWord = "beautiful";
 
+// creates a 1-based Array with optional
+function range( limit, step ) {
+	
+	var returnArray = [];
+	
+	for(var i = 1; i <= limit; i += (step | 1) ) { returnArray.push(i);  }
+	
+	return returnArray;
+}
+
+function makeArrayFromString(strIn) {
+	
+	var arrayOut = [];
+	for(var i=0; i < strIn.length; i++) {  		arrayOut[i] = strIn.charAt(i);  	}
+	
+	return arrayOut;
+}
 
 
 // modify the Function prototype to allow for quick method decoration later
@@ -75,11 +94,11 @@ Array.method('contains', function(val) {
 
 // remove duplicates
 // requires 'contains' method
-Array.method('makeSet', function(){
+Array.method('makeSet', function() {
 
     var set = [];
 
-    for(var i = 0; i < this.length; i++){
+    for(var i = 0; i < this.length; i++) {
         var elem = this[i];
         var tail = this.slice(i + 1);
         if(!tail.contains(elem)){
@@ -96,7 +115,7 @@ Array.method('filter', function (fn) {
 
     for(var i = 0; i < this.length; i++){
 
-        if(fn (this[i])){
+        if( fn ( this[i] ) ){
             filteredArray.push(this[i]);
         }
     }
@@ -115,8 +134,21 @@ Array.method('map', function (fn) {
 });
 
 
+// a.k.a reduce
+Array.method('foldLeft', function(init, fn) {
+	
+	var result = init;
+	for(var i = 0; i < this.length; i++) {
+		result = fn( result, this[i] );
+	}
+	
+	return result;
+});
 
-// ---- HEAP ------------------------------------------
+
+
+
+// ---- TRASH HEAP ------------------------------------------
 
 
 //functionalTools.init(); functionalTools = {init:function()}

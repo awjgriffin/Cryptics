@@ -14,36 +14,41 @@ import javax.ws.rs.core.Response.Status;
 
 import org.codehaus.jettison.json.JSONObject;
 
+/**
+ * HOW TO: http://www.vogella.com/tutorials/REST/article.html
+ * 
+ * @author grandre
+ */
 @Path("/json")
 @Produces(MediaType.APPLICATION_JSON)
 public class JSONService {
 
+	
+	// the default behaviour
 	@GET
 	public Response readJSONFromFile() {
 		
 		try {
-			
 			return okResponse( loadFile().toString() );
-			
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).header("error", e).build();
 		}
 	}
 
+	
 	@GET
 	@Path("asText")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response readJSONFromFileAsText() {
 		
 		try {
-			
 			return okResponse( loadFile().toString() );
-			
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).header("error", e).build();
 		}
 	}	
 
+	
 	private JSONObject loadFile() throws Exception {
 		
 		JSONObject json = new JSONObject();
@@ -94,10 +99,12 @@ public class JSONService {
 		}
 		
 		return Response.ok().build();   // TODO: return json as msg?
+		
 	}
 	
 	
 	private File getFile( final String filename ) throws URISyntaxException {
+		
 		return new File( this.getClass().getResource( filename ).toURI() ); 
 	}
 	
