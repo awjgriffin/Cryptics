@@ -8,7 +8,7 @@ function getJSONData() {
 	
 	jQuery.ajax({
 	    type: "GET",
-	    url: '/WebTest/rest/json',
+	    url: '/Cryptics/rest/json',
 	    success: function(result) {
 	    	jsonData = result;
 	    },
@@ -25,7 +25,7 @@ function getJSONDataAsText() {
 	
 	jQuery.ajax({
 	    type: "GET",
-	    url: '/WebTest/rest/json/asText',
+	    url: '/Cryptics/rest/json/asText',
 	    success: function(result) {
 	    	jsonData = result;
 	    },
@@ -42,7 +42,7 @@ function postJSONData() {
 	
 	jQuery.ajax({
 	    type: "POST",
-	    url: '/WebTest/rest/json/save?json=' + jsonData,
+	    url: '/Cryptics/rest/json/save?json=' + jsonData,
 	    success: function(result) {
 	    	alert('JSON data successfully posted.');
 	    	//jsonData = result;

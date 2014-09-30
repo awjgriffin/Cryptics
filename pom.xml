@@ -2,12 +2,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.db.agriffin</groupId>
-  <artifactId>WebTest</artifactId>
+  <artifactId>Cryptics</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
   
-  <name>WebTest Maven Webapp</name>
-  <url>http://maven.apache.org</url>
+  <name>Cryptic Crossword Webapp</name>
   
   <dependencies>
   
@@ -45,7 +44,7 @@
   </dependencies>
   
   <build>
-    <finalName>WebTest</finalName>
+    <finalName>Cryptics</finalName>
   </build>
   
 </project>
